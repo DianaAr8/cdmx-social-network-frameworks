@@ -13,7 +13,6 @@
 <script>
 import firebase from 'firebase'
 export default {
-  name: "signUp",
   data () {
     return {
       email:'',
@@ -23,8 +22,8 @@ export default {
   methods: {
     signUp () {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-      .then((user) => {
-        alert('Se ha creado tu cuenta exitosamente!')
+      .then(user => this.$router.replace('login'), {
+
        }).catch ((error) => {
          alert('Ooops' + error.message)
             });

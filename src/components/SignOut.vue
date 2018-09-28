@@ -20,7 +20,7 @@ export default {
         .auth()
         .signgOut()
         .then(user => {
-          this.$router.replace();
+          this.$router.replace('login');
         })
         .catch(error => {
           console.log("Error al cerrar sesión", error);

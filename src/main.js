@@ -7,17 +7,13 @@ import BootstrapVue from 'bootstrap-vue'
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
+// Vue.use(Router)
+
 
 const router = new VueRouter({
   routes
 })
 
-new Vue({
-  router,
-  el: '#app',
-  render: h => h(App),
-  
-})
 const config = {
   apiKey: "AIzaSyCQUmANFCfeuGa2E1uMJNGTiYjp97yRYBk",
   authDomain: "social-network-vue-f2793.firebaseapp.com",
@@ -27,3 +23,13 @@ const config = {
   messagingSenderId: "432750321013"
 };
 firebase.initializeApp(config);
+
+window.firebase-firebase;
+
+
+new Vue({
+  router,
+  el: '#app',
+  render: h => h(App),
+  
+})

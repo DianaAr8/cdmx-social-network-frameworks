@@ -4,9 +4,8 @@
     <form @submit.prevent='login'> 
         <input type="text" placeholder="e-mail" v-model="email"><br>
         <input type="password" placeholder="contraseña" v-model="password"><br>
-         <b-button variant="info">Ingresar</b-button>
-        <button type="submit" class="btn btn-info">Ingresar</button>
-        <button type="submit" class="btn btn-info"> <img src="src/assets/logo.png" alt="Google">Google</button>
+        <button type="submit">Ingresar</button><br>
+        <button type="submit" @click="google"> <img src="src/assets/google.png" alt="Google" class="btn-google">Google</button>
         <p>¿Aún no tienes una cuenta?  <router-link to="/signup" >Crea una...</router-link></p>
     </form>
 
@@ -15,63 +14,79 @@
 
 
 <script>
-import firebase from 'firebase'
+import firebase from "firebase";
 
 export default {
-    data() {
-        return {
-            email: '',
-            password: '',
-        }
-    }, 
-    methods: { 
-        login () {
-            firebase
-            .auth().signInWithEmailAndPassword(this.email, this.password)
-            .then ((user) => {
-                alert('Empieza la diversión') 
-                    //this.$swal('Correcto', 'OK');
-                
-            })
-            .catch((error) => {
-                const errorCode = error.code;
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    login() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => this.$router.replace("muro"),
+          error => alert("Error" + error.message)
+        );
+    },
 
-                if(errorCode === 'auth/invalid-email'){
-                     alert('Ingresa un correo electrónico válido');
-                     } else if (errorCode === 'auth/weak-password') {  
-                    alert('Ingresa una contraseña válida, mínimo 6 caracteres');
-                    } else if (errorCode === 'auth/email-already-in-use') {
-                        alert('Usuario ya registrado, favor de verificar datos');
-                        }
-            });
+    google() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+  .auth()
+                    .signInWithPopup(provider)
+                    .then((result)=>{
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        const token = result.credential.accessToken;
+                        // The signed-in user info.
+                        const user = result.user;
+                        console.log(user);
+                        this.$router.replace('muro')
+                        // ...
+                    }).catch(function(error) {
+                        // Handle Errors here.
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        // The email of the user's account used.
+                        const email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        const credential = error.credential;
+                        // ...
+                        console.log(errorMessage);
+    
+                    });
+            }
         }
-    }
-}
+    };
 </script>
 
 
 <style lang="scss">
-
 .login {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 input {
-    margin: 10px 0;
-    width: 20%;
-    padding: 15px;
+  margin: 10px 0;
+  width: 20%;
+  padding: 15px;
 }
 button {
-    margin-top: 20px;
-    width: 10%;
-    cursor: pointer;
+  margin-top: 20px;
+  width: 10%;
+  cursor: pointer;
 }
 p {
-    margin-top: 40px;
-    font-size: 13px;
+  margin-top: 40px;
+  font-size: 13px;
 }
-p a {
-    text-decoration: underline;
-    cursor: pointer;
+
+.btn-google {
+
+width: 20px
 }
 </style>
 

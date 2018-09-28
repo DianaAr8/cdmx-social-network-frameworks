@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # social-network-vue
 
 > A Vue.js project
@@ -17,7 +16,6 @@ npm run build
 ```
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
-=======
 # Rehaciendo tu red social usando librerías y frameworks
 
 ## Preámbulo
@@ -238,4 +236,3 @@ se usan muchas veces en conjunción con Redux como manejador de _estado_.
 * [ ] Permite editar posts (in place).
 * [ ] Permite filtrar posts por público/amigos.
 * [ ] Permite marcar posts como _gustados_ (like).
->>>>>>> 7cc63aa199f1bf0fb8a6370716c8f23821651e94
