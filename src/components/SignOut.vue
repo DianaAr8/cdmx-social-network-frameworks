@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button type="submit">Cerrar sesión</button>
+        <button class="btn btn-dark" v-on:click="signgOut">Cerrar sesión</button>
     </div>
 </template>
 

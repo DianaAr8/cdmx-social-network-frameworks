@@ -4,8 +4,8 @@
     <form @submit.prevent='login'> 
         <input type="text" placeholder="e-mail" v-model="email"><br>
         <input type="password" placeholder="contraseña" v-model="password"><br>
-        <button type="submit">Ingresar</button><br>
-        <button type="submit" @click="google"> <img src="src/assets/google.png" alt="Google" class="btn-google">Google</button>
+        <button class="btn btn-info">Ingresar</button><br>
+        <button class="btn btn-danger" @click="google"> <img src="src/assets/google.png" alt="Google" class="btn-google">Google</button>
         <p>¿Aún no tienes una cuenta?  <router-link to="/signup" >Crea una...</router-link></p>
     </form>
 

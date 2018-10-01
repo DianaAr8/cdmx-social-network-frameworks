@@ -5,6 +5,8 @@ import routes from './router/index'
 import firebase from 'firebase'
 import BootstrapVue from 'bootstrap-vue'
 
+Vue.config.productionTip = false
+
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 // Vue.use(Router)
@@ -12,6 +14,21 @@ Vue.use(BootstrapVue)
 
 const router = new VueRouter({
   routes
+})
+
+// router.beforeEach((to, from, next) => {
+//   let currentUser = firebase.auth().currentUser
+//   let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+//   if (requiresAuth && !currentUser) next('login')
+//   else if (!requiresAuth && currentUser) next('muro')
+//   else next()
+// })
+
+new Vue({
+  router,
+  el: '#app',
+  render: h => h(App),
+  
 })
 
 const config = {
@@ -24,12 +41,4 @@ const config = {
 };
 firebase.initializeApp(config);
 
-window.firebase-firebase;
-
-
-new Vue({
-  router,
-  el: '#app',
-  render: h => h(App),
-  
-})
+window.firebase = firebase;

@@ -1,9 +1,10 @@
 <template>
 <div class="sign-up">
-   <form> 
-        <input type="text" v-model="email" placeholder="e-mail">
+   <form @submit.prevent="signUp"> 
+     <h1>Registrate</h1>
+        <input type="email" v-model="email" placeholder="e-mail">
         <input type="password" v-model="password" placeholder="contraseña">
-        <button type="button" class="btn btn-info">Sign Up</button>
+        <button class="btn btn-info">Registrarme</button>
 
     </form>
 </div>
@@ -13,6 +14,7 @@
 <script>
 import firebase from 'firebase'
 export default {
+  name: 'signUp',
   data () {
     return {
       email:'',
@@ -22,7 +24,7 @@ export default {
   methods: {
     signUp () {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-      .then(user => this.$router.replace('login'), {
+      .then(user => this.$router.replace('Login'), {
 
        }).catch ((error) => {
          alert('Ooops' + error.message)
@@ -34,10 +36,11 @@ export default {
 
 
 <style  scoped>
-.signUp {
-  margin-top: 40px;
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-input {
-  margin:s ;
-}
+
 </style>
