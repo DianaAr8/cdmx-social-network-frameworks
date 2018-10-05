@@ -23,6 +23,7 @@
   </b-collapse>
 </b-navbar>
 
+
  <b-col  offset-sm="2" sm = "8"  > 
     
           <b-form-textarea  class="mt-4" id="textarea2" v-model="publication" placeholder="Escribe tu publicación" :rows="4" >
@@ -46,11 +47,12 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase, { functions } from "firebase";
 
 export default {
     name: "Muro",
     data() {
+        mostrar: true
         return {
             publication: null,
             publications: [],
@@ -59,6 +61,9 @@ export default {
         }
     }, 
     methods: {
+        cambiarEstado: function() {
+            this.mostrar = !this.mostrar;
+        },
         addPublication() {
             firebase.database().ref('publications').push({name:this.publication})
     
