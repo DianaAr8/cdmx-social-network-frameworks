@@ -1,22 +1,48 @@
 <template>
     <div>
-        <h1>Hola</h1>
-        <input type="text" v-model="movie" class="form-control" @keyup.enter="addMovie">
+        <b-navbar toggleable="md" type="dark" variant="info">
 
+  <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
+  <b-navbar-brand href="#">Social Network</b-navbar-brand>
+
+  <b-collapse is-nav id="nav_collapse">
+
+    <!-- Right aligned nav items -->
+    <b-navbar-nav class="ml-auto">
+       <b-nav-item-dropdown right>
+        <!-- Using button-content slot -->
+        <template slot="button-content">
+          <em>User</em>
+        </template>
+        <b-dropdown-item href="#">Profile</b-dropdown-item>
+        <b-dropdown-item href="#" v-on:click="signOut">Signout</b-dropdown-item>
+      </b-nav-item-dropdown>
+    </b-navbar-nav>
+
+  </b-collapse>
+</b-navbar>
+
+ <b-col  offset-sm="2" sm = "8"  > 
+    
+          <b-form-textarea  class="mt-4" id="textarea2" v-model="publication" placeholder="Escribe tu publicación" :rows="4" >
+                    </b-form-textarea>
+            <button class="btn btn-danger" id="btn-publication" @click='addPublication'>Publicar</button>
+        
         <ul>
-            <li v-for='(movieName,key) in movies' :key="key">
-               {{movieName.name}}
-               <button class="btn btn-danger" @click='deleteMovie(key)'>Delete</button>
-<br>
-<br>
-               <input type="text" v-model="editForm[key]" class="form-control">   
-                <button class="btn btn-info" @click="editMovie(key)">Edit</button>  
+            <li v-for='(publicationName,key) in publications' :key="key">
+               {{publicationName.name}}
+            
+            <input type="text" v-model="editForm[key]" class="form-control">   
+                <button class="btn btn-info" @click="editPublication(key)" ><i class="fas fa-edit"></i></button>  
+                 <button class="btn btn-danger" @click='deletePublication(key)'><i class="fas fa-trash-alt"></i></button> 
 
             </li>
         </ul>
-
-         <button class="btn btn-dark" v-on:click="signOut">Cerrar sesión</button>
+        
+          </b-col > 
     </div>
+    
 </template>
 
 <script>
@@ -26,23 +52,25 @@ export default {
     name: "Muro",
     data() {
         return {
-            movie: null,
-            movies: [],
-            editForm: []
+            publication: null,
+            publications: [],
+            editForm: [],
+          
         }
     }, 
     methods: {
-        addMovie() {
-            firebase.database().ref('movies').push({name:this.movie})
+        addPublication() {
+            firebase.database().ref('publications').push({name:this.publication})
+    
             .then((data) => {console.log(data)})
             .catch((error) => {console.log(error)})
         },
-        editMovie(key) {
-            firebase.database().ref('movies/' + key).set({name:this.editForm[key]});
+        editPublication(key) {
+            firebase.database().ref('publications/' + key).set({name:this.editForm[key]});
             this.editForm = [];
         },
-        deleteMovie(key) {
-            firebase.database().ref('movies/' + key).remove();
+        deletePublication(key) {
+            firebase.database().ref('publications/' + key).remove();
         },
         signOut() {
       firebase.auth().signOut()
@@ -55,8 +83,8 @@ export default {
     }
     },
     created() {
-        firebase.database().ref('movies').on('value',(snapshot) => {
-            this.movies = snapshot.val();
+        firebase.database().ref('publications').on('value',(snapshot) => {
+            this.publications = snapshot.val();
         })
     }
 }
@@ -72,9 +100,13 @@ li {
     display: inline-block;
     margin: 0 10px;
 }
- .btn-danger, .btn-info {
-     width: 70px;
+ #btn-publication{
+     width: 80px;
      height: 40px;
+ }
+ .btn-danger, .btn-info{
+        width: 40px;
+        height: 40px;
  }
 
  .btn-dark {

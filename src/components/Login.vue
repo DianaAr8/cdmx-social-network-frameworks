@@ -1,17 +1,21 @@
 <template>
-<div class='login'>
+<div class='login' >
     <h1>Login</h1>
     <form @submit.prevent='login'> 
-        <input type="text" placeholder="e-mail" v-model="email"><br>
-        <input type="password" placeholder="contraseña" v-model="password"><br>
-        <button class="btn btn-info">Ingresar</button><br>
-        <button class="btn btn-danger" @click="google"> <img src="src/assets/google.png" alt="Google" class="btn-google">Google</button>
+  <div class="form-group">
+    <input type="email" v-model="email" class="mb-2 mr-sm-2 mb-sm -0" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa tu email">
+  </div>
+  <div class="form-group">
+    <input type="password" v-model="password" class="mb-2 mr-sm-2 mb-sm -0" id="exampleInputPassword1" placeholder="Ingresa tu password">
+  </div>  
+  <b-button type="submit" variant="primary" >Acceder</b-button>
+  <b-button variant="outline-danger" @click="google"> <img src="src/assets/google.png" class="btn-google">Google</b-button>
         <p>¿Aún no tienes una cuenta?  <router-link to="/signup" >Crea una...</router-link></p>
-    </form>
+</form>
+
 
 </div>
 </template>
-
 
 <script>
 import firebase from "firebase";
@@ -37,37 +41,38 @@ export default {
     google() {
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase
-  .auth()
-                    .signInWithPopup(provider)
-                    .then((result)=>{
-                        // This gives you a Google Access Token. You can use it to access the Google API.
-                        const token = result.credential.accessToken;
-                        // The signed-in user info.
-                        const user = result.user;
-                        console.log(user);
-                        this.$router.replace('muro')
-                        // ...
-                    }).catch(function(error) {
-                        // Handle Errors here.
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        // The email of the user's account used.
-                        const email = error.email;
-                        // The firebase.auth.AuthCredential type that was used.
-                        const credential = error.credential;
-                        // ...
-                        console.log(errorMessage);
-    
-                    });
-            }
-        }
-    };
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const token = result.credential.accessToken;
+          // The signed-in user info.
+          const user = result.user;
+          console.log(user);
+          this.$router.replace("muro");
+          // ...
+        })
+        .catch(function(error) {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          const credential = error.credential;
+          // ...
+          console.log(errorMessage);
+        });
+    }
+  }
+};
 </script>
 
 
 <style lang="scss">
 .login {
   margin-top: 40px;
+  text-align: center;
 }
 input {
   margin: 10px 0;
@@ -85,8 +90,7 @@ p {
 }
 
 .btn-google {
-
-width: 20px
+  width: 20px;
 }
 </style>
 
