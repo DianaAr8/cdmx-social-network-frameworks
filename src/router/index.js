@@ -1,7 +1,7 @@
 import Login from '../components/Login.vue'
 import SignUp from '../components/SignUp.vue'
 import Muro from '../components/Muro.vue'
-import SignOut from '../components/SignOut.vue'
+
 
 
     
@@ -15,9 +15,7 @@ const routes = [
     
     { path: '/signup', component: SignUp, name: 'signup'},
 
-    { path: '/muro', component: Muro, name: 'muro'},
-
-    { path: '/signout', component: SignOut, name: 'signout',meta: {requiresAuth: true}}
+    { path: '/muro', component: Muro, name: 'muro', meta: {requiresAuth: true}}
 ]
 
 // router.beforeEach((to, from, next) => {
