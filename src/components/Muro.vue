@@ -13,10 +13,10 @@
        <b-nav-item-dropdown right>
         <!-- Using button-content slot -->
         <template slot="button-content">
-          <em>User</em>
+          <em>Usuario</em>
         </template>
-        <b-dropdown-item href="#">Profile</b-dropdown-item>
-        <b-dropdown-item href="#" v-on:click="signOut">Signout</b-dropdown-item>
+        <b-dropdown-item href="#">Perfil</b-dropdown-item>
+        <b-dropdown-item href="#" v-on:click="signOut">Cerrar Sesión</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
 
@@ -24,24 +24,29 @@
 </b-navbar>
 
 
- <b-col  offset-sm="2" sm = "8"  > 
-    
+
+    <div>
           <b-form-textarea  class="mt-4" id="textarea2" v-model="publication" placeholder="Escribe tu publicación" :rows="4" >
                     </b-form-textarea>
             <button class="btn btn-danger" id="btn-publication" @click='addPublication'>Publicar</button>
         
         <ul>
             <li v-for='(publicationName,key) in publications' :key="key">
-               {{publicationName.name}}
-            
-            <input type="text" v-model="editForm[key]" class="form-control">   
-                <button class="btn btn-info" @click="editPublication(key)" ><i class="fas fa-edit"></i></button>  
-                 <button class="btn btn-danger" @click='deletePublication(key)'><i class="fas fa-trash-alt"></i></button> 
-
+                <div class="post">
+              <p>{{publicationName.name}} </p>
+              </div>
+              <b-button variant="primary" @click='like(key)'><span>{{like}}</span><i class="far fa-thumbs-up"></i></b-button>  
+             <b-button variant="danger" @click='deletePublication(key)'><i class="fas fa-trash-alt"></i></b-button> 
+              <button class="btn btn-info" @click="editPublication(key)" ><i class="fas fa-edit"></i></button>  
+                 <div class="edit" v-show="mostrar">
+            <b-form-textarea class="mt-4" type="text" v-model="editForm[key]" > </b-form-textarea>
+            <b-button  variant="success" @click='editPublication(key)'><i class="far fa-save"></i></b-button>  
+             </div>
+      
             </li>
         </ul>
-        
-          </b-col > 
+
+           </div> 
     </div>
     
 </template>
@@ -52,8 +57,10 @@ import firebase, { functions } from "firebase";
 export default {
     name: "Muro",
     data() {
-        mostrar: true
+    
         return {
+            mostrar: true,
+            like: 1,
             publication: null,
             publications: [],
             editForm: [],
@@ -61,9 +68,6 @@ export default {
         }
     }, 
     methods: {
-        cambiarEstado: function() {
-            this.mostrar = !this.mostrar;
-        },
         addPublication() {
             firebase.database().ref('publications').push({name:this.publication})
     
@@ -71,11 +75,19 @@ export default {
             .catch((error) => {console.log(error)})
         },
         editPublication(key) {
+             this.mostrar = !this.mostrar;
             firebase.database().ref('publications/' + key).set({name:this.editForm[key]});
             this.editForm = [];
         },
         deletePublication(key) {
             firebase.database().ref('publications/' + key).remove();
+        },
+        like() {
+            this.like.push({nombre})
+        },
+        dislike() {
+            this.nogusta = !this.nogusta;
+            this.nogusta--
         },
         signOut() {
       firebase.auth().signOut()
@@ -109,7 +121,7 @@ li {
      width: 80px;
      height: 40px;
  }
- .btn-danger, .btn-info{
+ .btn-danger, .btn-info, .btn-success, .btn-primary{
         width: 40px;
         height: 40px;
  }
@@ -118,4 +130,8 @@ li {
      width: 120px;
 
  }
+ .post{
+
+ }
+
 </style>

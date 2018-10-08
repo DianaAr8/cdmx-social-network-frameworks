@@ -9,7 +9,7 @@
   <div class="form-group">
     <input type="password" v-model="password" class="mb-2 mr-sm-2 mb-sm -0" id="exampleInputPassword1" placeholder="Ingresa tu password">
   </div>
-   <button  class="btn btn-primary">Acceder</button>
+   <button @click=" signUp" class="btn btn-primary">Acceder</button>
     </form>
      <p>¿Ya tienes cuenta?  <router-link to="/login" >Regresa</router-link></p>
      </b-col > 
@@ -23,8 +23,8 @@ export default {
   name: "signUp",
   data() {
     return {
-      email: "",
-      password: ""
+      email: '',
+      password: ''
     };
   },
   methods: {
@@ -32,9 +32,9 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(user => this.$router.replace("Login"), {})
+        .then(user => this.$router.replace('muro'), {})
         .catch(error => {
-          alert("Ooops" + error.message);
+          alert('Ooops' + error.message);
         });
     }
   }

@@ -8,7 +8,7 @@
   <div class="form-group">
     <input type="password" v-model="password" class="mb-2 mr-sm-2 mb-sm -0" id="exampleInputPassword1" placeholder="Ingresa tu password">
   </div>  
-  <b-button variant="primary" >Acceder</b-button>
+  <b-button @click="login" variant="primary" >Acceder</b-button>
   <div>
   <b-button variant="outline-danger" @click="google"> <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="btn-google">Google</b-button>
   <b-button variant="outline-primary" @click="facebook"> <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" class="btn-facebook">Facebook</b-button>
@@ -36,7 +36,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
-          user => this.$router.replace("muro"),
+          user => this.$router.replace('muro'),
           error => alert("Error" + error.message)
         );
     },
@@ -67,26 +67,30 @@ export default {
           console.log(errorMessage);
         });
     },
-    facebook () {
+    facebook() {
       const provider = new firebase.auth.FacebookAuthProvider();
-    
-      firebase.auth().signInWithPopup(provider) .then(result => {
+
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
           const token = result.credential.accessToken;
           // The signed-in user info.
           const user = result.user;
           console.log(user);
           this.$router.replace("muro");
-  // ...
-}).catch(function(error) {
-  // Handle Errors here.
-  const errorCode = error.code;
-  const errorMessage = error.message;
-  // The email of the user's account used.
-  const email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  const credential = error.credential;
-  // ...
-});
+          // ...
+        })
+        .catch(function(error) {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          const credential = error.credential;
+          // ...
+        });
     }
   }
 };
@@ -98,7 +102,7 @@ export default {
   margin-top: 40px;
   text-align: center;
 }
-input{
+input {
   border-radius: 10px;
   margin: 10px 0;
   width: 20%;
@@ -115,7 +119,8 @@ p {
   font-size: 13px;
 }
 
-.btn-google, .btn-facebook {
+.btn-google,
+.btn-facebook {
   width: 20px;
 }
 </style>
